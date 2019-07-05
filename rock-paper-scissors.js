@@ -13,43 +13,65 @@ function computerPlay() {
 //Global score variables
 let playerScore = 0;
 let computerScore = 0;
+let resultsDiv = document.querySelector('#results');
+let scoreDiv = document.querySelector('#score');
 
 // Compare player choice and computer choice, log result,
 // increment scores appropriately
 function rockPaperScissors(playerSelection, computerSelection) {
-  let player = playerSelection.toLowerCase();
+
   if (playerSelection === computerSelection) {
-    console.log('You tied! Try again.');
+    resultsDiv.textContent = 'You tied! Try again.'
+    scoreDiv.textContent = `Computer score: ${computerScore}
+                            Your score: ${playerScore}`
     return;
   }
   if (computerSelection === 'rock') {
     if (playerSelection === 'paper') {
-      console.log('You win! Paper beats rock.')
-      return playerScore += 1;
+      resultsDiv.textContent = 'You won this round! Paper beats rock.'
+      playerScore += 1;
+      scoreDiv.textContent = `Computer score: ${computerScore}
+                              Your score: ${playerScore}`
+      return;
     }
     if (playerSelection === 'scissors') {
-      console.log('You lose! Rock beats scissors.')
-      return computerScore += 1;
+      resultsDiv.textContent = 'You lost this round! Rock beats scissors.'
+      computerScore += 1;
+      scoreDiv.textContent = `Computer score: ${computerScore}
+      Your score: ${playerScore}`
+return;
     }
   }
   if (computerSelection === 'paper') {
     if (playerSelection === 'scissors') {
-      console.log('You win! Scissors beats paper.')
-      return playerScore += 1;
+      resultsDiv.textContent = 'You won this round! Scissors beats paper.'
+      playerScore += 1;
+      scoreDiv.textContent = `Computer score: ${computerScore}
+      Your score: ${playerScore}`
+return;
     }
     if (playerSelection === 'rock') {
-      console.log('You lose! Paper beats rock.')
-      return computerScore += 1;
+      resultsDiv.textContent = 'You lost this round! Paper beats rock.'
+      computerScore += 1;
+      scoreDiv.textContent = `Computer score: ${computerScore}
+      Your score: ${playerScore}`
+return;
     }
   }
   if (computerSelection === 'scissors') {
     if (playerSelection === 'rock') {
-      console.log('You win! Rock beats scissors.')
-      return playerScore += 1;
+      resultsDiv.textContent = 'You won this round! Rock beats scissors.'
+      playerScore += 1;
+      scoreDiv.textContent = `Computer score: ${computerScore}
+      Your score: ${playerScore}`
+return;
     }
     if (playerSelection === 'paper') {
-      console.log('You lose! Scissors beats rock.')
-      return computerScore += 1;
+      resultsDiv.textContent = 'You lost this round! Scissors beats paper.'
+      computerScore += 1;
+      scoreDiv.textContent = `Computer score: ${computerScore}
+      Your score: ${playerScore}`
+return;
     }
   }
 }
@@ -78,24 +100,25 @@ function rockPaperScissors(playerSelection, computerSelection) {
 //        }
 //	    }
 
-  let playerChoice = '';
-  let rockButton = document.getElementById('rock-btn');
-  let paperButton = document.getElementById('paper-btn');
-  let scissorsButton = document.getElementById('scissors-btn');
+  let buttons = document.querySelector('#button-container');
 
-  let anyButton = document.querySelector('button');
-
-  rockButton.addEventListener('click', function(event) {
-    playerChoice = 'rock';
+  buttons.addEventListener('click', function(event) {
+    let playerChoice = event.target.id;
+    let computerChoice = computerPlay();
+    console.log(computerChoice);
+    rockPaperScissors(playerChoice, computerChoice)
+    if (computerScore === 5) {
+      scoreDiv.textContent = `Computer wins the game! Final Score:
+      Computer score: ${computerScore}
+      Your score: ${playerScore}`
+      computerScore = 0;
+      playerScore = 0;
+    }
+    if (playerScore === 5) {
+      scoreDiv.textContent = `You win the game! Final Score: Computer score: ${computerScore}
+      Your score: ${playerScore}`
+      computerScore = 0;
+      playerScore = 0;
+    }
   });
-  paperButton.addEventListener('click', function(event) {
-    playerChoice = 'paper';
-  });
-  scissorsButton.addEventListener('click', function(event) {
-    playerChoice = 'scissors';
-  });
-  let computerChoice = computerPlay();
-  console.log(playerChoice);
-
-  rockPaperScissors(playerChoice, computerChoice);
 
